@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -226,13 +225,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double arbLeft = staticFrictionLeft + accelerationLeft;
         double arbRight = staticFrictionRight + accelerationRight;
 
-        // TODO(pj) Bug in simulator?
         SparkMaxPIDController.ArbFFUnits arbUnit = SparkMaxPIDController.ArbFFUnits.kVoltage;
-//        SparkMaxPIDController.ArbFFUnits arbUnit = SparkMaxPIDController.ArbFFUnits.kPercentOut;
-//        arbLeft *= 0.008;
-//        arbRight *= 0.008;
-        System.out.println(RobotController.getBatteryVoltage() + ", " + arbLeft + ", " + arbRight);
-
 
         m_leftPid.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
         m_rightPid.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);
@@ -252,5 +245,4 @@ public class ChassisSubsystem extends SubsystemBase {
         m_odometry.resetPosition(pose, m_gyro.getRotation2d());
         m_simulator.resetOdometry(pose);
     }
-
 }
